@@ -1,0 +1,17 @@
+{{Infobox football biography
+| name = Juan Pérez
+| birth_date = {{birth date and age|1990|3|5}}
+| position = [[Forward (association football)|Striker]]
+| years1 = 2008–2012
+| clubs1 = [[Club Olimpia|Olimpia]]
+| caps1 = 80
+| goals1 = 30
+| years2 = 2012–
+| clubs2 = [[Sevilla FC|Sevilla]]
+| caps2 = 100
+| goals2 = 40
+| nationalyears1 = 2011–
+| nationalteam1 = [[Paraguay national football team|Paraguay]]
+| nationalcaps1 = 24
+| nationalgoals1 = 7
+}}

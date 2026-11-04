@@ -1,0 +1,87 @@
+# Alcance de la cohorte. Todo lo que define "quien entra" vive aca.
+born_from: "1980-01-01"
+born_to: "2001-12-31"
+cutoff_date: "2026-11-04"
+
+# Umbral de features (sin cambios respecto del proyecto original, pedido del usuario)
+max_feature_age: 23
+min_minutes_u23: 1000
+
+# Targets (sin cambios)
+targets:
+  caps_standard: 15
+  caps_elite: 30
+  min_standard: 3500
+  min_elite: 8000
+
+# Paises: codigo interno -> identificadores por fuente.
+# tm_league_codes: codigos de primera division en Transfermarkt. VERIFICAR en la
+# primera corrida (`python -m src.pipeline check-config`): el pipeline imprime el
+# nombre de la competicion que devuelve TM para cada codigo.
+countries:
+  ARG:
+    name: Argentina
+    wikidata_qid: Q414
+    fbref_nation: ARG
+    tm_country_id: 9
+    tm_league_codes: [AR1N]
+    tm_national_team_id: 3437
+  BRA:
+    name: Brasil
+    wikidata_qid: Q155
+    fbref_nation: BRA
+    tm_country_id: 26
+    tm_league_codes: [BRA1]
+    tm_national_team_id: 3439
+  CHI:
+    name: Chile
+    wikidata_qid: Q298
+    fbref_nation: CHI
+    tm_country_id: 33
+    tm_league_codes: [CLPD]
+    tm_national_team_id: 3700
+  URU:
+    name: Uruguay
+    wikidata_qid: Q77
+    fbref_nation: URU
+    tm_country_id: 179
+    tm_league_codes: [URU1]
+    tm_national_team_id: 3449
+  PAR:
+    name: Paraguay
+    wikidata_qid: Q733
+    fbref_nation: PAR
+    tm_country_id: 133
+    tm_league_codes: [PR1A]
+    tm_national_team_id: 3581
+  COL:
+    name: Colombia
+    wikidata_qid: Q739
+    fbref_nation: COL
+    tm_country_id: 37
+    tm_league_codes: [COL1]
+    tm_national_team_id: 3816
+  ECU:
+    name: Ecuador
+    wikidata_qid: Q736
+    fbref_nation: ECU
+    tm_country_id: 44
+    tm_league_codes: [EC1N]
+    tm_national_team_id: 5750
+
+# Temporadas de planteles de liga a recorrer (semilla 3). Un nacido en 1980
+# debuta tipicamente a los 17-19 -> desde 1997.
+league_seed_seasons: {from: 1997, to: 2025}
+
+# Clasificacion de competiciones de TM para min_elite_puente (identica a
+# scrape_tm_career.py). Se mantiene la regla UEFA de fallback, pero el reporte
+# lista los minutos que entran SOLO por esa regla para que se puedan auditar.
+competitions:
+  elite: [GB1, ES1, IT1, FR1, L1, PO1]
+  puente: [NL1, BE1, SC1, TR1, GR1, RU1, UKR1, PL1, DK1, NO1, SE1, FI1, RO1, AZ1, IS1, SLO1, GEO1]
+  continental: [CL, CLQ, EL, ELQ, CS, CLI, UCOL, ECLQ, USC, CWC, FCWC, FIC1, RECO, USMX, ACLE, ACL2, ACL, CCL]
+  # Solo seleccion MAYOR. Los juveniles se separaron (antes estaban mezclados).
+  nt_senior: [FS, WMQ1, WMQ4, WMQ6, WMQ, EMQ, COPA, FIWC, AFT, CF1, ASL1, AFC, EURO, CONC, GOCU, UNLA, UNLB, UNLC, UNLD, UNFI, UNPO, ACQU, AU2C, FARQ, POWM, WMQ3, CNLA, CNLB, CNNF]
+  nt_youth: [U17Q, U19Q, U21Q, OLYM, OLCF]
+  club_friendly: [KLUB]
+  uefa_confederation_id: 6
