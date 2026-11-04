@@ -1,0 +1,14 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+data/raw/
+data/interim/
+data/manifests/
+data/processed/
+logs/
+reports/validation/
+reports/REPORTE.md
+data/manual/kaggle/
