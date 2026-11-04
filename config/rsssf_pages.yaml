@@ -1,0 +1,6 @@
+# Paginas RSSSF a procesar. parser: topscorers | raw
+# Las URLs de ejemplo deben verificarse; si no existen quedan como not_found en el manifest.
+# Agregar a mano las paginas de goleadores por pais/temporada que se quieran usar.
+pages:
+  - {id: arg_topscorers, url: "https://www.rsssf.org/tablesa/arg-topscorers.html", parser: topscorers, country: ARG}
+  - {id: uru_topscorers, url: "https://www.rsssf.org/tablesu/uru-topscorers.html", parser: topscorers, country: URU}

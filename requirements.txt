@@ -1,0 +1,16 @@
+# Base (ya usadas en el proyecto)
+pandas>=2.2
+numpy>=1.26
+requests>=2.32
+beautifulsoup4>=4.12
+lxml>=5.2
+rapidfuzz>=3.9
+# Nuevas
+pyyaml>=6.0        # config/*.yaml
+pyarrow>=16.0      # salidas Parquet
+python-dotenv>=1.0 # API keys y contacto desde .env
+pytest>=8.0        # tests de parsers, normalizacion y deduplicacion
+# Opcionales
+# kaggle>=1.6      # descargar el dataset player-scores (backfill/validacion)
+# Eliminadas respecto del pipeline anterior: seleniumbase / undetected-chromedriver
+# (se usaban para resolver CAPTCHA de Cloudflare; ver docs/POLITICA.md)

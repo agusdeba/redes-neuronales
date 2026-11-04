@@ -1,0 +1,151 @@
+# Configuracion por fuente. rate: segundos minimos entre requests al dominio
+# (token bucket de capacidad 1 => concurrencia 1). jitter: segundos aleatorios
+# extra. breaker: errores consecutivos que abren el circuito y detienen la fuente.
+# enabled=false => el adaptador existe pero no corre salvo --source explicito.
+#
+# Politica (no negociable, ver docs/POLITICA.md): no se resuelven CAPTCHAs, no se
+# evade Cloudflare/Turnstile, no se usan proxies para burlar bloqueos. Si una
+# respuesta es un desafio anti-bot, la fuente se marca BLOCKED y se sigue con las demas.
+
+user_agent: "redes-neuronales-cohorte/1.0 (investigacion academica; contacto en .env CONTACT_EMAIL)"
+
+defaults:
+  rate: 3.0
+  jitter: 1.5
+  timeout: 60
+  max_retries: 5
+  backoff_base: 4.0
+  backoff_max: 300
+  breaker: 8
+  respect_robots: true
+
+sources:
+  wikidata:
+    enabled: true
+    domains: [query.wikidata.org, www.wikidata.org]
+    rate: 5.0
+    jitter: 1.0
+    timeout: 90
+    license: "CC0 1.0"
+    tos: "https://www.wikidata.org/wiki/Wikidata:Data_access"
+    notes: "SPARQL oficial. Timeout del servicio 60 s: una consulta por pais y anio."
+
+  wikipedia:
+    enabled: true
+    domains: [es.wikipedia.org, pt.wikipedia.org, en.wikipedia.org]
+    rate: 1.0
+    jitter: 0.5
+    license: "CC BY-SA 4.0 (atribucion requerida)"
+    tos: "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"
+    notes: "Solo API MediaWiki (action=query / parse), nunca HTML masivo. Usa maxlag=5."
+
+  transfermarkt:
+    enabled: true
+    domains: [www.transfermarkt.com, tmapi.transfermarkt.technology]
+    rate: 4.0
+    jitter: 2.0
+    breaker: 6
+    license: "Propietaria. Uso academico de bajo volumen; sin redistribucion de datos crudos."
+    tos: "https://www.transfermarkt.com/intern/anb"
+    notes: "Fuente principal de identidad y carrera. Endpoint tmapi no documentado: puede cambiar."
+    headers:
+      Accept-Language: "en-US,en;q=0.9"
+      Referer: "https://www.transfermarkt.com/"
+    # TM bloquea UAs no-navegador en el sitio web. Se usa un UA de navegador
+    # constante y honesto en el resto de los headers; no se rota UA ni IP.
+    browser_user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+
+  fbref:
+    enabled: true
+    domains: [fbref.com]
+    rate: 7.0          # Sports Reference publica un limite de ~10 req/min
+    jitter: 2.0
+    breaker: 3
+    license: "Sports Reference: uso personal; prohibido scraping agresivo. Sin datos Opta desde 2026-01."
+    tos: "https://www.sports-reference.com/termsofuse.html"
+    notes: "Si devuelve un desafio Cloudflare, la fuente queda BLOCKED. Alternativa: exportes manuales en data/manual/fbref/."
+
+  nft:
+    enabled: true
+    domains: [www.national-football-teams.com]
+    rate: 5.0
+    license: "Verificar ToS del sitio"
+    tos: "https://www.national-football-teams.com/"
+    notes: "Contraste de caps de seleccion mayor."
+
+  worldfootball:
+    enabled: true
+    domains: [www.worldfootball.net]
+    rate: 5.0
+    license: "Verificar ToS del sitio"
+    tos: "https://www.worldfootball.net/"
+    notes: "Contraste de carrera por club/temporada."
+
+  rsssf:
+    enabled: true
+    domains: [www.rsssf.org, www.rsssf.com]
+    rate: 5.0
+    license: "Copyright de los autores; uso con credito a RSSSF"
+    tos: "https://www.rsssf.org/"
+    notes: "Backfill historico. Paginas configuradas a mano en config/rsssf_pages.yaml."
+
+  espn:
+    enabled: false
+    domains: [site.api.espn.com, site.web.api.espn.com]
+    rate: 2.0
+    license: "Sin licencia explicita de reuso (endpoint JSON no documentado)"
+    tos: "https://disneytermsofuse.com/"
+    notes: "Contraste reciente. Desactivado por defecto."
+
+  soccerway:
+    enabled: false
+    domains: [int.soccerway.com]
+    rate: 10.0
+    breaker: 2
+    license: "ToS restrictivos"
+    tos: "https://int.soccerway.com/"
+    notes: "Anti-bot agresivo. Desactivado por defecto; si bloquea, se descarta."
+
+  api_football:
+    enabled: false
+    domains: [v3.football.api-sports.io]
+    rate: 6.5          # plan gratuito: 10 req/min, 100/dia
+    license: "Licencia del plan contratado"
+    tos: "https://www.api-football.com/terms"
+    env_key: API_FOOTBALL_KEY
+    notes: "API oficial. Se activa si existe API_FOOTBALL_KEY."
+
+  statsbomb:
+    enabled: true
+    domains: [raw.githubusercontent.com]
+    rate: 0.5
+    license: "StatsBomb Open Data: uso no comercial con atribucion"
+    tos: "https://github.com/statsbomb/open-data/blob/master/LICENSE.pdf"
+    notes: "Validacion de xG en torneos cubiertos."
+
+  kaggle:
+    enabled: false
+    domains: [www.kaggle.com]
+    license: "Por dataset; verificar antes de usar"
+    env_key: KAGGLE_KEY
+    datasets: ["davidcariboo/player-scores"]
+    notes: "Backfill/validacion. Requiere kaggle.json o KAGGLE_USERNAME/KAGGLE_KEY."
+
+  opta:
+    enabled: false
+    license: "Comercial (Stats Perform). PENDIENTE DE LICENCIA."
+    env_key: OPTA_API_KEY
+    notes: "No se scrapea TheAnalyst ni endpoints propietarios. Ver docs/OPTA_ACCESO.md."
+
+  sofascore:
+    enabled: false
+    license: "ToS prohiben uso automatizado. NO IMPLEMENTADO."
+  fotmob:
+    enabled: false
+    license: "ToS prohiben uso automatizado. NO IMPLEMENTADO."
+  besoccer:
+    enabled: false
+    license: "API comercial con clave. NO IMPLEMENTADO sin clave."
+  footballdatabase:
+    enabled: false
+    license: "Sin API publica. NO IMPLEMENTADO."

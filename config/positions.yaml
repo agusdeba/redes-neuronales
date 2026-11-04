@@ -1,0 +1,43 @@
+# Mapeo de posiciones por fuente -> grupo.
+#   attack   = delantero (CF, SS, extremos, FW)
+#   midfield / defense / goalkeeper = no ataque
+#   ambiguous = no decide por si solo
+# Los valores se comparan normalizados (minusculas, sin acentos, sin puntuacion).
+#
+# Regla de inclusion (decision del usuario 2026-11-04):
+#   - posicion PRIMARIA de ataque en alguna fuente fuerte (TM o FBref) y ninguna
+#     fuente fuerte la contradice como primaria      -> included
+#   - ataque solo como posicion secundaria (p. ej. FBref "MF,FW", TM principal
+#     "Attacking Midfield" con secundaria "Centre-Forward") -> review
+#   - sin evidencia de ataque                         -> excluded
+#   - las decisiones manuales de data/manual/position_decisions.csv mandan siempre.
+
+transfermarkt:
+  attack: ["centre-forward", "second striker", "left winger", "right winger", "striker", "forward", "attack"]
+  ambiguous: ["attacking midfield", "left midfield", "right midfield", "midfield"]
+  midfield: ["central midfield", "defensive midfield"]
+  defense: ["centre-back", "left-back", "right-back", "defender", "sweeper", "defence"]
+  goalkeeper: ["goalkeeper"]
+
+fbref:
+  # FBref lista 1 o 2 posiciones; la primera es la principal.
+  tokens:
+    FW: attack
+    MF: midfield
+    DF: defense
+    GK: goalkeeper
+
+wikidata:
+  # se compara por etiqueta en ingles del item de posicion
+  attack: ["forward", "centre-forward", "center forward", "striker", "winger", "second striker", "left winger", "right winger", "inside forward", "false nine"]
+  ambiguous: ["midfielder", "attacking midfielder", "wide midfielder"]
+  midfield: ["defensive midfielder", "central midfielder"]
+  defense: ["defender", "centre-back", "full-back", "wing-back", "sweeper", "left-back", "right-back"]
+  goalkeeper: ["goalkeeper"]
+
+wikipedia:
+  attack: ["delantero", "delantero centro", "centrodelantero", "extremo", "extremo izquierdo", "extremo derecho", "punta", "segundo delantero", "atacante", "ponta", "centroavante", "ponta-esquerda", "ponta-direita", "forward", "striker", "winger", "centre forward"]
+  ambiguous: ["mediocampista ofensivo", "enganche", "volante ofensivo", "meia", "meia-atacante", "mediapunta", "attacking midfielder", "midfielder"]
+  midfield: ["mediocampista", "volante", "centrocampista", "volante de contencion", "medio centro"]
+  defense: ["defensor", "defensa", "zaguero", "lateral", "lateral izquierdo", "lateral derecho", "zagueiro", "defender"]
+  goalkeeper: ["arquero", "portero", "guardameta", "goleiro", "goalkeeper"]

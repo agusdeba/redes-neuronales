@@ -1,0 +1,20 @@
+# Competiciones FBref (id de /en/comps/<id>/). kind: single = temporada "2019",
+# two_year = "2019-2020". first/last: rango a intentar (FBref devuelve 404 si no existe;
+# eso queda en el manifest como not_found y no se reintenta).
+# VERIFICAR ids de Chile y Paraguay en la primera corrida.
+competitions:
+  ARG-Primera:     {id: 21,  slug: Liga-Profesional-Argentina, kind: single, first: 2014, last: 2025, country: ARG, type: league}
+  BRA-SerieA:      {id: 24,  slug: Serie-A, kind: single, first: 2014, last: 2025, country: BRA, type: league}
+  CHI-Primera:     {id: 35,  slug: Primera-Division, kind: single, first: 2014, last: 2025, country: CHI, type: league}
+  URU-Primera:     {id: 45,  slug: Liga-AUF-Uruguaya, kind: single, first: 2016, last: 2025, country: URU, type: league}
+  PAR-Primera:     {id: 61,  slug: Primera-Division, kind: single, first: 2014, last: 2025, country: PAR, type: league}
+  COL-PrimeraA:    {id: 41,  slug: Primera-A, kind: single, first: 2014, last: 2025, country: COL, type: league}
+  ECU-SerieA:      {id: 58,  slug: Serie-A, kind: single, first: 2014, last: 2025, country: ECU, type: league}
+  INT-Libertadores: {id: 14, slug: Copa-Libertadores, kind: single, first: 2014, last: 2025, type: continental}
+  INT-Sudamericana: {id: 205, slug: Copa-Sudamericana, kind: single, first: 2014, last: 2025, type: continental}
+  INT-CopaAmerica: {id: 685, slug: Copa-America, kind: single, years: [2015, 2016, 2019, 2021, 2024], type: nt_senior}
+  INT-WorldCup:    {id: 1,   slug: World-Cup, kind: single, years: [1998, 2002, 2006, 2010, 2014, 2018, 2022, 2026], type: nt_senior}
+  INT-WCQ-CONMEBOL: {id: 4,  slug: WCQ----CONMEBOL-M, kind: single, years: [2002, 2006, 2010, 2014, 2018, 2022, 2026], type: nt_senior}
+  INT-Friendlies:  {id: 218, slug: Friendlies-M, kind: single, first: 2014, last: 2025, type: nt_senior}
+  Big5:            {id: Big5, slug: Big-5-European-Leagues, kind: two_year, first: 1995, last: 2025, path: stats/players, type: league}
+  POR-Primeira:    {id: 32,  slug: Primeira-Liga, kind: two_year, first: 2000, last: 2025, type: league}
