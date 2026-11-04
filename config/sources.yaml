@@ -29,6 +29,12 @@ sources:
     license: "CC0 1.0"
     tos: "https://www.wikidata.org/wiki/Wikidata:Data_access"
     notes: "SPARQL oficial. Timeout del servicio 60 s: una consulta por pais y anio."
+    # Decision del usuario (2026-11-04, "Wikidata si, tmapi no"): WDQS es la API oficial
+    # de consultas de Wikidata y su robots.txt apunta a crawlers. Se usa a ritmo lento,
+    # con User-Agent identificable segun https://meta.wikimedia.org/wiki/User-Agent_policy.
+    # Solo esta fuente ignora robots.txt; todas las demas lo respetan.
+    respect_robots: false
+    user_agent: "redes-neuronales-cohorte/1.0 (proyecto academico; +https://github.com/agusdeba/redes-neuronales)"
 
   wikipedia:
     enabled: true
